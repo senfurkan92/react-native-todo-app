@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useContext } from 'react';
 import MainContext from '../context/MainContext';
 
@@ -12,10 +12,20 @@ export default function AppCard({item}) {
             <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                 {
                     !item.done  
-                    ? <Button title="complete" color={'green'} onPress={() => ctx.dispatchList({type: 'complete', id: item.id})}/>
-                    : <Text>Completed</Text>
+                    ?  <Pressable 
+                            onPress={() => ctx.dispatchList({type: 'complete', id: item.id})}
+                        >
+                            <View style={styles.btn2}>
+                                <Text style={{color: 'white', fontWeight: 'bold'}}>COMPLETE</Text>
+                            </View>
+                        </Pressable> 
+                    : <Text style={styles.text}>Completed</Text>
                 }
-                <Button title="remove" color={'red'} onPress={() => ctx.dispatchList({type: 'remove', id: item.id})}/> 
+                <Pressable onPress={() => ctx.dispatchList({type: 'remove', id: item.id})}>
+                    <View style={styles.btn1}>
+                        <Text style={{color: 'white', fontWeight: 'bold'}}>REMOVE</Text>
+                    </View>
+                </Pressable>
             </View> 
         </View>
     )
@@ -26,7 +36,25 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         padding: 3,
         marginVertical: 3,
-        borderColor: 'blue',
-        borderWidth: 0.5,
+        borderRadius: 10,
+        shadowColor: 'black',
+        backgroundColor: 'lightgray'
+    },
+    btn1: {
+        backgroundColor: 'red',
+        color: 'white',
+        padding: 8,
+        borderRadius: 10
+    },
+    btn2: {
+        backgroundColor: 'green',
+        color: 'white',
+        padding: 8,
+        borderRadius: 10,
+        marginEnd: 5
+    },
+    text: {
+        padding: 8,
+        marginEnd: 5
     }
 })
